@@ -1,0 +1,40 @@
+# ===============================
+# Node.js (Backend)
+# ===============================
+server/node_modules/
+server/package-lock.json
+
+# ===============================
+# Environment variables
+# ===============================
+.env
+
+# ===============================
+# Logs
+# ===============================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# ===============================
+# OS generated files
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Editor / IDE files
+# ===============================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===============================
+# Build / cache (future safety)
+# ===============================
+dist/
+build/
+.cache/
