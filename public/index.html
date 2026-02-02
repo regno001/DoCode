@@ -2,31 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoCode </title>
+  <title>LearnByCode | Home</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
   <div class="container">
-    <h1>DoCode</h1>
-    <p>Practical Learning Through Live Coading</p>
+    <h1>LearnByCode</h1>
+    <p>Making Learning Practical Through Live Coding</p>
 
     <div class="card">
-      <button onclick="createClass()">Create Class (host)</button></div>
-       
-       <div class="card">
-        <input type="text"
-        id="roomInput"
-        placeholder="Enter Class Code"
-        />
-        <button onclick="joinClass()">join Class</button>
-       </div>
+      <button onclick="createRoom()">Create Class (Host)</button>
+    </div>
 
-        
+    <div class="card">
+      <input type="text" id="roomId" placeholder="Enter Class Code">
+      <button onclick="joinClass()">Join Class</button>
+    </div>
   </div>
 
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script src="js/socket.js"></script>
-  <script src="js/index.js"></script>
+  <script src="js/home.js"></script>
+
 </body>
 </html>
