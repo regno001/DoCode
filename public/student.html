@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student View | LearnByCode</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/host.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="room-info">
+                <h3>Classroom</h3>
+                <div id="displayRoomID" class="room-badge">JOINING...</div>
+            </div>
+            <div class="status-box"><span class="status-dot"></span> Listening to Teacher</div>
+        </aside>
+
+        <main class="editor-section">
+            <div class="editor-header"><span>main.js</span><span class="label" style="color:#00d2ff">Student Mode (View Only)</span></div>
+            <textarea id="codeDisplay" readonly placeholder="Waiting for teacher to type..."></textarea>
+            
+            <div class="terminal-wrapper">
+                <div class="terminal-header"><span>Terminal</span></div>
+                <textarea id="terminalDisplay" readonly placeholder="Terminal output will appear here..."></textarea>
+            </div>
+        </main>
+    </div>
+    <script src="js/student.js"></script>
+</body>
+</html>

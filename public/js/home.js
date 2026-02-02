@@ -1,31 +1,21 @@
-function generateRoomID(){
-  return Math.random().toString(36).substring(2,8);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const btnHost = document.getElementById('btnHost');
+    const btnJoin = document.getElementById('btnJoin');
+    const roomInput = document.getElementById('roomID');
 
-//Host
+    // Host: Room ID generate karo aur host.html pe bhejo
+    btnHost.addEventListener('click', () => {
+        const generatedID = 'LBC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        window.location.href = `host.html?room=${generatedID}`;
+    });
 
-function createRoom(){
-  const roomId = generateRoomID();
-  socket.emit("create-room" ,roomId);
-
-  socket.once("room-created",(id)=>{
-    window.location.href = `host.html?room=${id}`;
-  });
-}
-
-//Student
-
-function joinClass(){
-  const roomId = document.getElementById("roomId").value.trim();
-
-  if(!roomId){
-    alert("please Enter correct class code");
-    return;
-  }
-
-socket.emit("join-room",roomId);
-
-socket.once("room-joined",(id)=>{
-  window.location.href=`student.html?room=${id}`;
+    // Join: Input check karo aur student.html pe bhejo
+    btnJoin.addEventListener('click', () => {
+        const roomID = roomInput.value.trim();
+        if (roomID) {
+            window.location.href = `student.html?room=${roomID}`;
+        } else {
+            alert('Please enter a valid Room ID!');
+        }
+    });
 });
-}

@@ -1,42 +1,41 @@
-const express = require("express");
-const http = require("http");
-const path = require("path");
-const { Server } = require("socket.io");
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
+const io = new Server(server);
 
-// 🔥 serve public folder
-app.use(express.static(path.join(__dirname, "../public")));
+// Serve static files from the 'public' folder
+app.use(express.static(path.join(__dirname, '../public')));
 
-// socket.io
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
+
+    // Join a specific room
+    socket.on('join-room', ({ roomID, role }) => {
+        socket.join(roomID);
+        console.log(`User ${socket.id} joined room: ${roomID} as ${role}`);
+    });
+
+    // Sync Code from Host to Students
+    socket.on('code-update', (data) => {
+        // Broadcast only to others in the same room
+        socket.to(data.roomID).emit('receive-code', data.code);
+    });
+
+    // Sync Terminal from Host to Students
+    socket.on('terminal-update', (data) => {
+        socket.to(data.roomID).emit('receive-terminal', data.content);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
 });
 
-io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
-
-  socket.on("create-room", (roomId) => {
-    socket.join(roomId);
-    socket.role = "host";
-    console.log("Room created:", roomId);
-  });
-
-  socket.on("join-room", (roomId) => {
-    socket.join(roomId);
-    socket.role = "student";
-    console.log("Joined room:", roomId);
-  });
-
-  socket.on("code-update", (data) => {
-    socket.to(data.roomId).emit("receive-code", data.code);
-  });
-});
-
-// start server
-server.listen(5000, () => {
-  console.log("✅ Server running at http://localhost:5000");
+const PORT = 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });

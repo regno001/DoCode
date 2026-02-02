@@ -2,17 +2,33 @@ const params = new URLSearchParams(window.location.search);
 
 const roomId = params.get("room");
 
-document.getElementById("roomInfo").innerText ="Class Code :" + roomId;
+document.getElementById("roomCode").innerText ="Class Code :" + roomId;
+function sendCode(){
+const code = document.getElementById("teacherCode").value;
 
-const editor = document.getElementById("teacherEditor");
+socket.emit("code-update",{
+  roomId,
+  code,
+});
+console.log("code sent to student");
+}
+//Timer 
+let timerInterval;
+let timeLeft =300;
 
-//teacher types code 
+function startTimer(){
+  timeLeft=300;
 
-editor.addEventListener("input",()=>{
-  const code=editor.values;
+  socket.emit("start-timer",{
+    roomId,
+    time:timeLeft,
+  });
+  document.getElementById("timeStatus").innerText="Timer Stated (5 miniute)";
+}
 
-  socket.emit("code-update",{
-    roomId:roomId,
-    code:code,
-  })
-})
+function stopTimer(){
+  socket.emit("stop-Timer",roomId);
+
+  document.getElementById("time-Status").innerText = "Timer Stopped";
+}
+

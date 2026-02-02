@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LearnByCode | Home</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnByCode | Welcome</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <div class="container">
-    <h1>LearnByCode</h1>
-    <p>Making Learning Practical Through Live Coding</p>
+    <div class="container">
+        <header>
+            <h1 class="logo">Do<span>Code</span></h1>
+            <p class="tagline">Real-time interactive coding classroom</p>
+        </header>
 
-    <div class="card">
-      <button onclick="createRoom()">Create Class (Host)</button>
+        <div class="action-cards">
+            <div class="card host-card">
+                <div class="icon">👨‍🏫</div>
+                <h2>Host a Class</h2>
+                <p>Create a unique room and start teaching your students in real-time.</p>
+                <button id="btnHost" class="btn btn-primary">Create New Class</button>
+            </div>
+
+            <div class="card join-card">
+                <div class="icon">🎓</div>
+                <h2>Join a Class</h2>
+                <p>Enter the Room ID shared by your teacher to start practicing.</p>
+                <div class="input-group">
+                    <input type="text" id="roomID" placeholder="Enter Room ID (e.g. LBC-123)">
+                    <button id="btnJoin" class="btn btn-secondary">Join Now</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-      <input type="text" id="roomId" placeholder="Enter Class Code">
-      <button onclick="joinClass()">Join Class</button>
-    </div>
-  </div>
-
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/socket.js"></script>
-  <script src="js/home.js"></script>
-
+    <script src="js/home.js"></script>
 </body>
 </html>

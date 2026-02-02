@@ -4,21 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DoCode | Host</title>
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/host.css">
 </head>
 <body>
-  <div class="top-bar">
-    <h2>Teacher Panel</h2>
-    <span id="roomInfo"></span>
-  </div>
-
-  <div class="editor-container">
-    <textarea id="teacherEditor" placeholder="Start the code here">
-   
+  <header> <h2>Host Dashboard</h2>
+  <span id="roomCode"></span>
+</header>
+<main class="host-container">
+  <div class="panel">
+    <h3>Teacher Code</h3>
+    <textarea  id="teacherCode" placeholder="Start coding here">
+      
     </textarea>
+    <button onclick="sendCode()">
+      Broadcast Code
+    </button>
   </div>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="js/socket.js"></script>
-  <script src="js/host.js"></script>
+  <div class="panel">
+    <h3>Controls</h3>
+    <button onclick="startTimer()">
+      Start 5 min Timer
+    </button>
+    <button onclick="stopTimer()">Stop Timer</button>
+    <p id="timerStatus">Timer not Started</p>
+  </div>
+</main>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="js/socket.js"></script>
+<script src="js/home.js"></script>
+
 </body>
 </html>
