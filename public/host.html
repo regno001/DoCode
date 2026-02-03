@@ -4,32 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DoCode | Host</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/host.css">
 </head>
 <body>
-  <header> <h2>Host Dashboard</h2>
-  <span id="roomCode"></span>
-</header>
-<main class="host-container">
-  <div class="panel">
-    <h3>Teacher Code</h3>
-    <textarea  id="teacherCode" placeholder="Start coding here">
+  <nav>
+    <div class="logo">DoCode</div>
+    
+    <div class="Navigations">
+      <div class="home">Home</div>
+      <div class="about">About</div>
       
-    </textarea>
-    <button onclick="sendCode()">
-      Broadcast Code
-    </button>
-  </div>
-  <div class="panel">
-    <h3>Controls</h3>
-    <button onclick="startTimer()">
-      Start 5 min Timer
-    </button>
-    <button onclick="stopTimer()">Stop Timer</button>
-    <p id="timerStatus">Timer not Started</p>
-  </div>
-</main>
+    </div>
+  </nav>
+  <main>
+    <h1>Host DashBoard</h1>
+    <div class="coding"> <textarea name="TeacherEditor" id="HostEditor" placeholder="Start Your Program Here..."></textarea>
+    <textarea name="Terminal" id="Host Terminal" placeholder="Enter your Command"></textarea>
+    </div>
+   <div class="timer">  <label for="Timer" ></label>
+        <select name="timer" id="Timer">
+          <option value="5 min">⏳5 min</option>
+          <option value="10 min">⏳10 min</option>
+          <option value="10 min">⏳15 min</option>
+        </select>
+      <button class="timeStart">Start</button>
+      <button class="timeStop">Stop</button>
+      </div>
+       
+     <section>
+      <div class="student">
+        <h1>Students</h1>
+        
+      </div>
+     </section>
+    
+  </main>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script src="js/socket.js"></script>
