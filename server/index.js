@@ -10,32 +10,43 @@ const io = new Server(server);
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, '../public')));
 
-io.on('connection', (socket) => {
-    console.log('A user connected:', socket.id);
+io.on('connection',(socket)=>{
+    console.log('user connected',socket.id);
 
-    // Join a specific room
-    socket.on('join-room', ({ roomID, role }) => {
+    socket.on('join-room',({roomID , role , userName})=>{
         socket.join(roomID);
-        console.log(`User ${socket.id} joined room: ${roomID} as ${role}`);
+        console.log(`${userName}(${role}) joined:${roomID}`);
+
+        socket.to(roomID).emit('receive-message',{
+            sender:'System',
+            message:`${role==='host'?'Teacher':'Student'} has joined the Class`
+        });
     });
 
-    // Sync Code from Host to Students
-    socket.on('code-update', (data) => {
-        // Broadcast only to others in the same room
-        socket.to(data.roomID).emit('receive-code', data.code);
+    socket.on('code-update',(data)=>{
+        socket.to(data.roomID).emit('code-update',{code: data.code});
     });
 
-    // Sync Terminal from Host to Students
-    socket.on('terminal-update', (data) => {
-        socket.to(data.roomID).emit('receive-terminal', data.content);
+    socket.on('timer-update',(data)=>{
+        socket.to(data.roomID).emit('timer-update',{timeLeft: data.timeLeft});
     });
 
-    socket.on('disconnect', () => {
+    socket.on('stop-timer',(data)=>{
+        socket.to(data.roomID).emit('stop-timer');
+    });
+
+    socket.on('language-change',(data)=>{
+        socket.to(data.roomID).emit('language-change',{lang:data.lang });
+
+    
+    });
+
+    socket.on('disconnect',()=>{
         console.log('User disconnected');
     });
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+server.listen(PORT , ()=>{
+    console.log(`Server running at http://localhost:${PORT}`);
+})

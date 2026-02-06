@@ -2,30 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student View | LearnByCode</title>
-     <link rel="stylesheet" href="css/student.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoCode | Student Classroom</title>
+    <link rel="stylesheet" href="css/student.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <div class="room-info">
-                <h3>Classroom</h3>
-                <div id="displayRoomID" class="room-badge">JOINING...</div>
-            </div>
-            <div class="status-box"><span class="status-dot"></span> Listening to Teacher</div>
-        </aside>
 
-        <main class="editor-section">
-            <div class="editor-header"><span>main.js</span><span class="label" style="color:#00d2ff">Student Mode (View Only)</span></div>
-            <textarea id="codeDisplay" readonly placeholder="Waiting for teacher to type..."></textarea>
+    <nav>
+        <div class="logo">DoCode <span class="role-tag">| Student</span></div>
+        <div class="Navigations">
+            <div id="timerDisplay">00:00</div>
+            <div class="room-info">Room: <span id="currentRoom">LBC-XXXX</span></div>
+            <div class="lang-tag"><span id="activeLang">Python</span></div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="panel teacher-panel">
+            <div class="panel-header">👨‍🏫 Teacher's Editor</div>
+            <textarea id="TeacherCode" readonly placeholder="Waiting for teacher to type..."></textarea>
             
-            <div class="terminal-wrapper">
-                <div class="terminal-header"><span>Terminal</span></div>
-                <textarea id="terminalDisplay" readonly placeholder="Terminal output will appear here..."></textarea>
-            </div>
-        </main>
-    </div>
+            <div class="panel-header border-top">💻 Teacher's Terminal</div>
+            <textarea id="TeacherTerminal" class="terminal-view" readonly placeholder="Output will appear here..."></textarea>
+        </section>
+
+        <section class="panel student-panel">
+            <div class="panel-header">💻 Your Workspace</div>
+            <textarea id="StudentEditor" spellcheck="false" placeholder="Start practicing here..."></textarea>
+            
+            <div class="panel-header border-top">🚀 Your Terminal</div>
+            <textarea id="StudentTerminal" class="terminal-view" placeholder="Your code results..."></textarea>
+        </section>
+
+        <div class="chat-container">
+            <h3>Chat 💬</h3>
+            <div id="chatBox"></div>
+            <input type="text" id="userMsg" placeholder="Type message...">
+        </div>
+    </main>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="js/student.js"></script>
 </body>
 </html>
