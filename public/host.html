@@ -3,45 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoCode | Host</title>
+  <title>DoCode | Host Dashboard</title>
+  <link rel="stylesheet" href="css/host.css">
 </head>
 <body>
+
   <nav>
-    <div class="logo">DoCode</div>
-    
+    <div class="logo">DoCode <span style="font-size: 0.8rem; color: #888;">| Host</span></div>
     <div class="Navigations">
       <div class="home">Home</div>
       <div class="about">About</div>
-      
+      <div class="roomID" onclick="copyRoomID()">RoomId: <span id="displayRoomID" ></span></div>
+      <div class="Lang">
+    <select id="Language">
+      <option value="Python">Python</option>
+      <option value="Java">Java</option>
+      <option value="C">C</option>
+      <option value="C">C++</option>
+    </select>
     </div>
   </nav>
+
   <main>
-    <h1>Host DashBoard</h1>
-    <div class="coding"> <textarea name="TeacherEditor" id="HostEditor" placeholder="Start Your Program Here..."></textarea>
-    <textarea name="Terminal" id="Host Terminal" placeholder="Enter your Command"></textarea>
+    <aside class="sidebar">
+      <section class="student">
+        <h3>Students Online 🟢</h3>
+        <div id="studentList">
+          <div class="student-item">Rahul (You) <span class="online-dot"></span></div>
+          </div>
+      </section>
+
+      <section class="chat">
+        <h3>Live Chat 💬</h3>
+        <div id="chatBox">
+          <div class="chat-msg"><b>System:</b> Workspace is ready.</div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="userMsg" placeholder="Type message...">
+        </div>
+      </section>
+    </aside>
+
+    <div class="editor-container">
+      <section class="coding">
+        <div class="panel-header">📄 Editor.js</div>
+        <textarea name="TeacherEditor" id="HostEditor" placeholder="// Start Your Program Here..."></textarea>
+      </section>
+
+      <section class="terminal-wrapper">
+        <div class="panel-header">💻 Terminal</div>
+        <div class="terminal-body">
+          <span class="terminal-prompt">C:\Users\DoCode></span>
+          <textarea name="Terminal" id="HostTerminal" placeholder="Enter command..."></textarea>
+        </div>
+      </section>
     </div>
-   <div class="timer">  <label for="Timer" ></label>
-        <select name="timer" id="Timer">
-          <option value="5 min">⏳5 min</option>
-          <option value="10 min">⏳10 min</option>
-          <option value="10 min">⏳15 min</option>
-        </select>
-      <button class="timeStart">Start</button>
-      <button class="timeStop">Stop</button>
-      </div>
-       
-     <section>
-      <div class="student">
-        <h1>Students</h1>
-        
-      </div>
-     </section>
-    
   </main>
 
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-<script src="js/socket.js"></script>
-<script src="js/home.js"></script>
+  <div class="timer-float">
+    <select id="Timer">
+      <option value="5">⏳ 5 min</option>
+      <option value="10">⏳ 10 min</option>
+      <option value="15">⏳ 15 min</option>
+    </select>
+    <button class="timeStart" onclick="startTimer()">Start</button>
+    <button class="timeStop" onclick="stopTimer()">Stop</button>
+  </div>
 
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

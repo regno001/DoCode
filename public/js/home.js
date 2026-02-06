@@ -1,21 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const btnHost = document.getElementById('btnHost');
-    const btnJoin = document.getElementById('btnJoin');
-    const roomInput = document.getElementById('roomID');
+const runBTn= document.createElement("button");
+runBTn.innerText="RunCode";
+runBTn.style.margin="8px";
+document.querySelector(".panel-header").appendChild(runBTn);
 
-    // Host: Room ID generate karo aur host.html pe bhejo
-    btnHost.addEventListener('click', () => {
-        const generatedID = 'LBC-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-        window.location.href = `host.html?room=${generatedID}`;
-    });
+runBTn.onClick=()=>{
+    const code = document.getElementById("HostEditor").value;
+    const lang = document.getElementById("Language").value;
 
-    // Join: Input check karo aur student.html pe bhejo
-    btnJoin.addEventListener('click', () => {
-        const roomID = roomInput.value.trim();
-        if (roomID) {
-            window.location.href = `student.html?room=${roomID}`;
-        } else {
-            alert('Please enter a valid Room ID!');
-        }
+    fetch("http://localhost:3000/run",{
+     method: "POST",
+     headers: {"Content-Type":"application/json"},
+     bosy:JSON.stringify({code,lang})
+
+    })
+    .then(res=> res.text())
+    .then(output=>{
+        document.getElemnetById("HostTerminal").value = output;
     });
-});
+};

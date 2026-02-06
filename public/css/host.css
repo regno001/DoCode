@@ -1,0 +1,192 @@
+/* --- Global Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: #0b0b0e;
+    color: #e0e0e0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Navigation --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+    background: #16161e;
+    border-bottom: 1px solid #2d2d3d;
+    height: 60px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #00ff88;
+}
+
+.Navigations {
+    display: flex;
+    gap: 20px;
+}
+
+.Navigations div:hover {
+    color: #00ff88;
+    cursor: pointer;
+}
+
+/* --- Main Layout --- */
+main {
+    display: flex;
+    height: calc(100vh - 60px);
+    padding: 15px;
+    gap: 15px;
+}
+
+/* --- Sidebar (Left) --- */
+.sidebar {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.student, .chat {
+    background: #16161e;
+    border-radius: 10px;
+    border: 1px solid #2d2d3d;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.student { flex: 1.5; }
+.chat { flex: 2; }
+
+h3 {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.student-item {
+    background: #1f1f29;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.online-dot {
+    height: 8px;
+    width: 8px;
+    background: #00ff88;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #00ff88;
+}
+
+/* --- Editor & Terminal (Right) --- */
+.editor-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.panel-header {
+    background: #252531;
+    padding: 6px 15px;
+    font-size: 0.75rem;
+    color: #aaa;
+    border-radius: 10px 10px 0 0;
+}
+
+.coding, .terminal-wrapper {
+    background: #16161e;
+    border-radius: 10px;
+    border: 1px solid #2d2d3d;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.coding { flex: 3; }
+.terminal-wrapper { flex: 1; background: #000; }
+
+#HostEditor {
+    flex: 1;
+    background: #1e1e1e;
+    color: #9cdcfe;
+    border: none;
+    padding: 15px;
+    font-family: 'Consolas', monospace;
+    font-size: 1rem;
+    outline: none;
+    resize: none;
+}
+
+/* Real Terminal Body */
+.terminal-body {
+    display: flex;
+    padding: 10px;
+    flex: 1;
+}
+
+.terminal-prompt {
+    color: #00ff88;
+    font-family: 'Consolas', monospace;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+#HostTerminal {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Consolas', monospace;
+    outline: none;
+    resize: none;
+}
+
+/* --- Timer Float --- */
+.timer-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #16161e;
+    padding: 10px 15px;
+    border-radius: 50px;
+    border: 1px solid #00ff88;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+#Timer {
+    background: #252531;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+button {
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.timeStart { background: #00ff88; color: #000; }
+.timeStop { background: #ff4d4d; color: #fff; }
