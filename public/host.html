@@ -5,73 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DoCode | Host Dashboard</title>
   <link rel="stylesheet" href="css/host.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <nav>
-    <div class="logo">DoCode <span style="font-size: 0.8rem; color: #888;">| Host</span></div>
+    <div class="logo">DoCode <span class="role-tag">| Host</span></div>
     <div class="Navigations">
-      <div class="home">Home</div>
-      <div class="about">About</div>
-      <div class="roomID" onclick="copyRoomID()">RoomId: <span id="displayRoomID" ></span></div>
+      <div class="nav-item">Home</div>
+      
+      <div class="room-box" onclick="copyRoomID()" title="Click to copy">
+        RoomId: <span id="displayRoomID">LBC-XXXX</span>
+      </div>
+
+      <div id="timerDisplay">00:00</div>
+
       <div class="Lang">
-    <select id="Language">
-      <option value="Python">Python</option>
-      <option value="Java">Java</option>
-      <option value="C">C</option>
-      <option value="C">C++</option>
-    </select>
+        <select id="Language">
+          <option value="Python">Python</option>
+          <option value="Java">Java</option>
+          <option value="C">C</option>
+          <option value="Cpp">C++</option>
+        </select>
+      </div>
     </div>
   </nav>
 
   <main>
     <aside class="sidebar">
-      <section class="student">
+      <section class="student-section">
         <h3>Students Online 🟢</h3>
         <div id="studentList">
           <div class="student-item">Rahul (You) <span class="online-dot"></span></div>
-          </div>
+        </div>
       </section>
 
-      <section class="chat">
+      <section class="chat-section">
         <h3>Live Chat 💬</h3>
         <div id="chatBox">
           <div class="chat-msg"><b>System:</b> Workspace is ready.</div>
         </div>
         <div class="chat-input-area">
-          <input type="text" id="userMsg" placeholder="Type message...">
+          <input type="text" id="userMsg" placeholder="Type message and press Enter...">
         </div>
       </section>
     </aside>
 
     <div class="editor-container">
-      <section class="coding">
+      <section class="coding-area">
         <div class="panel-header">📄 Editor.js</div>
-        <textarea name="TeacherEditor" id="HostEditor" placeholder="// Start Your Program Here..."></textarea>
+        <textarea id="HostEditor" spellcheck="false" placeholder="// Start Your Program Here..."></textarea>
       </section>
 
-      <section class="terminal-wrapper">
+      <section class="terminal-area">
         <div class="panel-header">💻 Terminal</div>
         <div class="terminal-body">
-          <span class="terminal-prompt">C:\Users\DoCode></span>
-          <textarea name="Terminal" id="HostTerminal" placeholder="Enter command..."></textarea>
+          <div class="terminal-content">
+            <span class="terminal-prompt">C:\Users\DoCode></span>
+            <textarea id="HostTerminal" spellcheck="false" placeholder="Output will appear here..."></textarea>
+          </div>
         </div>
       </section>
     </div>
   </main>
 
   <div class="timer-float">
-    <select id="Timer">
-      <option value="5">⏳ 5 min</option>
-      <option value="10">⏳ 10 min</option>
-      <option value="15">⏳ 15 min</option>
-    </select>
-    <button class="timeStart" onclick="startTimer()">Start</button>
-    <button class="timeStop" onclick="stopTimer()">Stop</button>
+    <div class="timer-controls">
+        <select id="Timer">
+          <option value="5">5 min</option>
+          <option value="10">10 min</option>
+          <option value="15">15 min</option>
+        </select>
+        <button class="btn-start" onclick="startTimer()">Start</button>
+        <button class="btn-stop" onclick="stopTimer()">Stop</button>
+    </div>
   </div>
 
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  <script src="js/socket.js"></script>
-  <script src="js/home.js"></script>
+  <script src="js/host.js"></script>
 </body>
 </html>

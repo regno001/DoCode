@@ -1,192 +1,196 @@
-/* --- Global Reset --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
-    background-color: #0b0b0e;
-    color: #e0e0e0;
+    background-color: #0d1117;
+    color: #c9d1d9;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
 }
 
-/* --- Navigation --- */
+/* --- Navigation Bar --- */
 nav {
+    height: 60px;
+    background-color: #161b22;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 25px;
-    background: #16161e;
-    border-bottom: 1px solid #2d2d3d;
-    height: 60px;
+    padding: 0 20px;
+    border-bottom: 1px solid #30363d;
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #00ff88;
+    color: #58a6ff;
+}
+
+.role-tag {
+    font-size: 0.9rem;
+    color: #8b949e;
 }
 
 .Navigations {
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 
-.Navigations div:hover {
-    color: #00ff88;
+.room-box {
+    background: #21262d;
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 1px solid #30363d;
     cursor: pointer;
+    font-weight: 600;
 }
 
-/* --- Main Layout --- */
+#displayRoomID {
+    color: #3fb950;
+}
+
+#timerDisplay {
+    background: #ff4757;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-weight: bold;
+}
+
+/* --- Layout Structure --- */
 main {
     display: flex;
-    height: calc(100vh - 60px);
-    padding: 15px;
-    gap: 15px;
+    flex: 1;
 }
 
-/* --- Sidebar (Left) --- */
 .sidebar {
-    width: 320px;
+    width: 300px;
+    background-color: #0d1117;
+    border-right: 1px solid #30363d;
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
-.student, .chat {
-    background: #16161e;
-    border-radius: 10px;
-    border: 1px solid #2d2d3d;
+.student-section, .chat-section {
     padding: 15px;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
-
-.student { flex: 1.5; }
-.chat { flex: 2; }
 
 h3 {
     font-size: 0.9rem;
-    margin-bottom: 15px;
-    color: #888;
+    margin-bottom: 10px;
+    color: #8b949e;
     text-transform: uppercase;
 }
 
-.student-item {
-    background: #1f1f29;
-    padding: 8px 12px;
+#studentList, #chatBox {
+    flex: 1;
+    background: #161b22;
     border-radius: 6px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 10px;
+    overflow-y: auto;
     font-size: 0.9rem;
 }
 
-.online-dot {
-    height: 8px;
-    width: 8px;
-    background: #00ff88;
-    border-radius: 50%;
-    box-shadow: 0 0 5px #00ff88;
+.chat-input-area input {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    color: white;
+    border-radius: 4px;
 }
 
-/* --- Editor & Terminal (Right) --- */
+/* --- Editor & Terminal --- */
 .editor-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
 .panel-header {
-    background: #252531;
-    padding: 6px 15px;
-    font-size: 0.75rem;
-    color: #aaa;
-    border-radius: 10px 10px 0 0;
+    background: #161b22;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    color: #8b949e;
+    border-bottom: 1px solid #30363d;
 }
 
-.coding, .terminal-wrapper {
-    background: #16161e;
-    border-radius: 10px;
-    border: 1px solid #2d2d3d;
-    overflow: hidden;
+.coding-area {
+    flex: 2;
     display: flex;
     flex-direction: column;
 }
 
-.coding { flex: 3; }
-.terminal-wrapper { flex: 1; background: #000; }
-
 #HostEditor {
     flex: 1;
-    background: #1e1e1e;
-    color: #9cdcfe;
-    border: none;
-    padding: 15px;
-    font-family: 'Consolas', monospace;
+    background: #0d1117;
+    color: #d1d5db;
+    padding: 20px;
+    font-family: 'Fira Code', monospace;
     font-size: 1rem;
+    border: none;
     outline: none;
     resize: none;
 }
 
-/* Real Terminal Body */
-.terminal-body {
-    display: flex;
-    padding: 10px;
+.terminal-area {
     flex: 1;
+    border-top: 2px solid #30363d;
+    display: flex;
+    flex-direction: column;
 }
 
-.terminal-prompt {
-    color: #00ff88;
-    font-family: 'Consolas', monospace;
-    margin-right: 10px;
-    white-space: nowrap;
+.terminal-body {
+    flex: 1;
+    background: #010409;
+    padding: 10px;
 }
 
 #HostTerminal {
-    flex: 1;
+    width: 100%;
+    height: 80%;
     background: transparent;
     border: none;
-    color: #fff;
-    font-family: 'Consolas', monospace;
+    color: #3fb950;
+    font-family: 'Fira Code', monospace;
     outline: none;
     resize: none;
 }
 
-/* --- Timer Float --- */
+/* --- Timer Float Control --- */
 .timer-float {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #16161e;
-    padding: 10px 15px;
-    border-radius: 50px;
-    border: 1px solid #00ff88;
+    background: #21262d;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    border: 1px solid #30363d;
+}
+
+.timer-controls {
     display: flex;
     gap: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
+
+.btn-start { background: #238636; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+.btn-stop { background: #da3633; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 
 #Timer {
-    background: #252531;
+    background: #0d1117;
     color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 0 5px;
+    border: 1px solid #30363d;
+    border-radius: 4px;
 }
-
-button {
-    padding: 5px 15px;
-    border-radius: 20px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.timeStart { background: #00ff88; color: #000; }
-.timeStop { background: #ff4d4d; color: #fff; }
