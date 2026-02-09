@@ -7,6 +7,7 @@ if (!roomID) {
 
 const displayRoomID = document.getElementById("displayRoomID");
 const hostEditor = document.getElementById("HostEditor");
+const hostTerminal = document.getElementById("HostTerminal");
 const userMsg = document.getElementById("userMsg");
 const chatBox = document.getElementById("chatBox");
 
@@ -26,6 +27,12 @@ hostEditor.addEventListener("input", () => {
     code: hostEditor.value
   });
 });
+hostTerminal.addEventListener("input",()=>{
+  socket.emit("terminal-update",{
+  roomID,
+  code:hostTerminal.value    
+  })
+})
 
 userMsg.addEventListener("keypress", (e) => {
   if (e.key === "Enter" && userMsg.value.trim() !== "") {
@@ -38,6 +45,7 @@ userMsg.addEventListener("keypress", (e) => {
     userMsg.value = "";
   }
 });
+
 
 socket.on("receive-message", (data) => {
   appendMessage(`<b>${data.sender}:</b> ${data.message}`);

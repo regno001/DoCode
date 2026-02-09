@@ -21,12 +21,16 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.on("code-update", (data) => {
     document.getElementById("TeacherCode").value = data.code;
   });
+  socket.on("terminal-update" ,(data)=>{
+    document.getElementById("TeacherTerminal").value= data.code;
+  });
 
   socket.on("timer-update", (data) => {
     document.getElementById("timerDisplay").innerText = data.timeLeft;
   });
 
   socket.on("timer-stopped", () => {
+    
     document.getElementById("timerDisplay").innerText = "00:00";
   });
 

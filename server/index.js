@@ -26,6 +26,9 @@ io.on('connection',(socket)=>{
     socket.on('code-update',(data)=>{
         socket.to(data.roomID).emit('code-update',{code: data.code});
     });
+    socket.on('terminal-update',(data)=>{
+        socket.to(data.roomID).emit('terminal-update',{code:data.code});
+    })
 
     socket.on('timer-update',(data)=>{
         socket.to(data.roomID).emit('timer-update',{timeLeft: data.timeLeft});

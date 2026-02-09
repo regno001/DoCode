@@ -202,3 +202,14 @@ h3 {
     border-radius: 4px;
     text-align: center;
 }
+.run{
+    height: 30px;
+    width: 40px;
+
+    padding: 2px;
+    background-color: #1b222d;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    
+}
