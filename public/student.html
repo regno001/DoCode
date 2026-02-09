@@ -20,25 +20,30 @@
 
     <main>
         <section class="panel teacher-panel">
-            <div class="panel-header">👨‍🏫 Teacher's Editor</div>
+            <div class="panel-header">Teacher Editor</div>
             <textarea id="TeacherCode" readonly placeholder="Waiting for teacher to type..."></textarea>
             
-            <div class="panel-header border-top">💻 Teacher's Terminal</div>
+            <div class="panel-header border-top">Teacher Terminal</div>
             <textarea id="TeacherTerminal" class="terminal-view" readonly placeholder="Output will appear here..."></textarea>
         </section>
 
         <section class="panel student-panel">
-            <div class="panel-header">💻 Your Workspace</div>
+            <div class="panel-header">Your Workspace</div>
             <textarea id="StudentEditor" spellcheck="false" placeholder="Start practicing here..."></textarea>
             
-            <div class="panel-header border-top">🚀 Your Terminal</div>
+            <div class="panel-header border-top">Your Terminal</div>
             <textarea id="StudentTerminal" class="terminal-view" placeholder="Your code results..."></textarea>
         </section>
 
-        <div class="chat-container">
-            <h3>Chat 💬</h3>
+        <div class="chat-float" id="chatFloat">
+            <div class="chat-header" onclick="toggleChat()">
+                <span>Chat</span>
+                <span class="chat-toggle">-</span>
+            </div> 
+        <div class="chat-body" id="chatBody">
             <div id="chatBox"></div>
-            <input type="text" id="userMsg" placeholder="Type message...">
+            <input type="text" id="userMsg" placeholder="Type Your Query"> 
+        </div>
         </div>
     </main>
 

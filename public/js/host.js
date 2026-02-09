@@ -42,7 +42,7 @@ socket.on('receive-message',(data)=>{
 });
 
 function appendMessage(msg){
-  const msgElement = document.createElement('div');
+  let msgElement = document.createElement('div');
   msgElement=document.createElement('div');
   msgElement.innerHTML=msg;
   chatBox.appendChild(msgElement);
@@ -75,8 +75,9 @@ function startTimer(){
       socket.emit('stop-timer',{roomID});
       alert("Time's Up! Timer is Stopped");
       return;
+     
     }
-    timeInseconds--;
+     timeInseconds--;
     let mins = Math.floor(timeInSeconds/60);
     let secs = timeInSeconds%60;
 

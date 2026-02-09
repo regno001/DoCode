@@ -49,37 +49,65 @@ textarea {
     font-size: 0.85rem; 
 }
 
-/* Floating Chat (Right Bottom) */
-.chat-container {
-    position: absolute;
+.chat-float{
+    position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 250px;
-    height: 300px;
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 8px;
+    width: 280px;
+    height: 380px;
+    background: #020617;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    z-index: 10;
+    transition: all 0.3s ease;
+    z-index: 999;
 }
 
-.chat-container h3 {
-     padding: 8px; 
-     font-size: 0.8rem;
-      border-bottom: 1px solid #30363d;
-     }
-#chatBox {
-     flex: 1;
-    overflow-y: auto; 
+.chat-header{
+    height: 45px;
+    background: #1e293b;
+    color: #fff;
     padding: 10px;
-     font-size: 0.8rem;
- }
-#userMsg {
-     background: #0d1117; 
-     border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 14px 14px 0 0;
+    font-weight: 600;
+}
+
+.chat-body{
+    flex: 1;
     padding: 10px;
-    color: white; 
-     border-top: 1px solid #30363d; 
-     border-radius: 0 0 8px 8px; }
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-body input{
+    margin-top: auto;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}
+
+.chat-float.minimized{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
+
+.chat-float.minimized .chat-body{
+    border-radius: 50%;
+    justify-content: center;
+    display: none;
+}
+
+.chat-float.minimized .chat-toggle{
+    display: none;
+}
+#userMsg{
+    border: none;
+    color: #fff;
+    background: #1e293b;
+}

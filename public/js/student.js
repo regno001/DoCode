@@ -92,3 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+function toggleChat(){
+    const chat= document.getElementById("chatFloat");
+    chat.classList.toggle("minimized");
+}
