@@ -35,10 +35,10 @@ io.on('connection',(socket)=>{
         socket.to(data.roomID).emit('stop-timer');
     });
 
-    socket.on('language-change',(data)=>{
-        socket.to(data.roomID).emit('language-change',{lang:data.lang });
+    socket.on("language-change", ({roomID,lang})=>{
+        console.log("Language change to :",lang ,"in room ",roomID);
 
-    
+        socket.to(roomID).emit("language-updated",lang);
     });
 
     socket.on('disconnect',()=>{
