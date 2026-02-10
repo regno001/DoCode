@@ -10,6 +10,7 @@ const hostEditor = document.getElementById("HostEditor");
 const hostTerminal = document.getElementById("HostTerminal");
 const userMsg = document.getElementById("userMsg");
 const chatBox = document.getElementById("chatBox");
+const studentList = document.getElementById("studentList");
 
 displayRoomID.innerText = roomID;
 
@@ -58,6 +59,8 @@ function appendMessage(msg) {
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
+
+
 document.getElementById("Language").addEventListener("change", (e) => {
   socket.emit("language-change", {
     roomID,
@@ -99,3 +102,16 @@ function stopTimer() {
 function copyRoomID() {
   navigator.clipboard.writeText(roomID);
 }
+
+socket.on("student-joined",({socketId , userName})=>{
+  const div = document.createElement("div");
+  div.className = "student-item";
+  div.id = socketId;
+  div.innerHTML=`${userName} <span class = "online-dot"></span>`;
+  studentList.appendChild(div);
+});
+
+socket.on("student-left",({socketId})=>{
+  const el = document.getElementById(socketID);
+  if(el) el.remove();
+})

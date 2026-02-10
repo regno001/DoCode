@@ -19,18 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. JOIN A CLASS: Purana room join karne ka logic
     if (btnJoin) {
-        btnJoin.addEventListener('click', () => {
-            const enteredID = roomInput.value.trim();
-            
-            if (enteredID !== "") {
-                // Student ko redirect karna ID ke saath
-                // URL banega: student.html?room=LBC-4567
-                window.location.href = `student.html?room=${enteredID}`;
-            } else {
-                alert("Please enter a valid Room ID to join!");
-                roomInput.focus();
-            }
-        });
+       btnJoin.addEventListener("click",()=>{
+  const userName = document.getElementById("userName").value.trim();
+  const roomID = document.getElementById("roomID").value.trim();
+
+  sessionStorage.setItem("userName",userName);
+
+  window.location.href =
+    `student.html?room=${roomID}&name=${encodeURIComponent(userName)}`;
+});
     }
 
     // Enter key dabane par bhi join ho jaye

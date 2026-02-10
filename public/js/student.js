@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const roomID = urlParams.get("room");
-
+  const userName = urlParams.get("name");
+ 
   if (!roomID) {
     window.location.href = "index.html";
     return;
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.emit("join-room", {
     roomID,
     role: "student",
-    userName: "Student"
+    userName
   });
 
   socket.on("code-update", (data) => {

@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-
+const users = {};
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -15,13 +15,23 @@ io.on('connection',(socket)=>{
 
     socket.on('join-room',({roomID , role , userName})=>{
         socket.join(roomID);
-        console.log(`${userName}(${role}) joined:${roomID}`);
-
-        socket.to(roomID).emit('receive-message',{
-            sender:'System',
-            message:`${role==='host'?'Teacher':'Student'} has joined the Class`
+          if(role=== "student"){
+            socket.to(roomID).emit("student-joined",{
+                socketId:socket.id,
+                userName
+            
         });
+    }
     });
+    socket.on("disconnect",()=>{
+        const user = users[socket.id];
+        if(user){
+            socket.to(user.roomID).emit("student-left",{
+                socketID:socket.id
+            });
+            delete users[socket.id];
+        }
+    })
 
     socket.on('code-update',(data)=>{
         socket.to(data.roomID).emit('code-update',{code: data.code});
