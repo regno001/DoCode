@@ -103,15 +103,21 @@ function copyRoomID() {
   navigator.clipboard.writeText(roomID);
 }
 
-socket.on("student-joined",({socketId , userName})=>{
+socket.on("student-joined", ({ socketId, userName }) => {
+
+  if (document.getElementById(socketId)) return;
+
   const div = document.createElement("div");
   div.className = "student-item";
   div.id = socketId;
-  div.innerHTML=`${userName} <span class = "online-dot"></span>`;
-  studentList.appendChild(div);
+  div.innerHTML = `${userName} <span class="online-dot"></span>`;
+
+  document.getElementById("studentList").appendChild(div);
 });
 
-socket.on("student-left",({socketId})=>{
-  const el = document.getElementById(socketID);
-  if(el) el.remove();
-})
+socket.on("student-left", ({ socketId }) => {
+  const el = document.getElementById(socketId);
+  if (el) el.remove();
+});
+
+

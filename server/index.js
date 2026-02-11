@@ -1,65 +1,100 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const path = require('path');
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+
 const users = {};
-// Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, '../public')));
+const activeRooms = new Set();
 
-io.on('connection',(socket)=>{
-    console.log('user connected',socket.id);
+app.use(express.static(path.join(__dirname, "../public")));
 
-    socket.on('join-room',({roomID , role , userName})=>{
-        socket.join(roomID);
-          if(role=== "student"){
-            socket.to(roomID).emit("student-joined",{
-                socketId:socket.id,
-                userName
-            
-        });
+io.on("connection", (socket) => {
+
+  console.log("User connected:", socket.id);
+
+  socket.on("join-room", ({ roomID, role, userName }) => {
+
+    if (role === "host") {
+      activeRooms.add(roomID);
+      socket.join(roomID);
+      return;
     }
-    });
-    socket.on("disconnect",()=>{
-        const user = users[socket.id];
-        if(user){
-            socket.to(user.roomID).emit("student-left",{
-                socketID:socket.id
-            });
-            delete users[socket.id];
-        }
-    })
 
-    socket.on('code-update',(data)=>{
-        socket.to(data.roomID).emit('code-update',{code: data.code});
-    });
-    socket.on('terminal-update',(data)=>{
-        socket.to(data.roomID).emit('terminal-update',{code:data.code});
-    })
+    if (role === "student") {
 
-    socket.on('timer-update',(data)=>{
-        socket.to(data.roomID).emit('timer-update',{timeLeft: data.timeLeft});
-    });
+      if (!activeRooms.has(roomID)) {
+        socket.emit("invalid-room");
+        return;
+      }
 
-    socket.on('stop-timer',(data)=>{
-        socket.to(data.roomID).emit('stop-timer');
-    });
+      socket.join(roomID);
 
-    socket.on("language-change", ({roomID,lang})=>{
-        console.log("Language change to :",lang ,"in room ",roomID);
+      users[socket.id] = {
+        roomID,
+        userName
+      };
 
-        socket.to(roomID).emit("language-updated",lang);
-    });
+      socket.to(roomID).emit("student-joined", {
+        socketId: socket.id,
+        userName
+      });
 
-    socket.on('disconnect',()=>{
-        console.log('User disconnected');
+      return;
+    }
+
+  });
+
+  socket.on("disconnect", () => {
+
+    const user = users[socket.id];
+
+    if (user) {
+
+      socket.to(user.roomID).emit("student-left", {
+        socketId: socket.id
+      });
+
+      delete users[socket.id];
+    }
+
+    console.log("User disconnected:", socket.id);
+  });
+
+  socket.on("code-update", ({ roomID, code }) => {
+    socket.to(roomID).emit("code-update", { code });
+  });
+
+  socket.on("terminal-update", ({ roomID, code }) => {
+    socket.to(roomID).emit("terminal-update", { code });
+  });
+
+  socket.on("timer-update", ({ roomID, timeLeft }) => {
+    socket.to(roomID).emit("timer-update", { timeLeft });
+  });
+
+  socket.on("stop-timer", ({ roomID }) => {
+    socket.to(roomID).emit("timer-stopped");
+  });
+
+  socket.on("language-change", ({ roomID, lang }) => {
+    socket.to(roomID).emit("language-updated", lang);
+  });
+
+  socket.on("chat-message", ({ roomID, message, sender }) => {
+    socket.to(roomID).emit("receive-message", {
+      sender,
+      message
     });
+  });
+
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT , ()=>{
-    console.log(`Server running at http://localhost:${PORT}`);
-})
+
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
