@@ -47,9 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
       socket.emit("chat-message", {
         roomID,
         message: userMsg.value,
-        sender: "Student"
+        sender: userName
       });
-      appendMessage(`<b>You:</b> ${userMsg.value}`);
+      
       userMsg.value = "";
     }
   });
@@ -70,3 +70,4 @@ document.addEventListener("DOMContentLoaded", () => {
 function toggleChat() {
   document.getElementById("chatFloat").classList.toggle("minimized");
 }
+

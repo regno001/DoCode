@@ -42,7 +42,6 @@ userMsg.addEventListener("keypress", (e) => {
       message: userMsg.value,
       sender: "Host"
     });
-    appendMessage(`<b>You:</b> ${userMsg.value}`);
     userMsg.value = "";
   }
 });
@@ -71,14 +70,21 @@ document.getElementById("Language").addEventListener("change", (e) => {
 let timerInterval;
 
 function startTimer() {
-  let timeInSeconds = document.getElementById("Timer").value * 60;
+
+  let timeInSeconds =
+    parseInt(document.getElementById("Timer").value) * 60;
 
   clearInterval(timerInterval);
 
   timerInterval = setInterval(() => {
+
     if (timeInSeconds <= 0) {
       clearInterval(timerInterval);
-      socket.emit("stop-timer", { roomID });
+
+      document.getElementById("timerDisplay").innerText = "00:00";
+
+      socket.emit("timer-stopped", { roomID });
+
       return;
     }
 
@@ -87,12 +93,19 @@ function startTimer() {
     const mins = Math.floor(timeInSeconds / 60);
     const secs = timeInSeconds % 60;
 
+    const formatted =
+      `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+
+    document.getElementById("timerDisplay").innerText = formatted;
+
     socket.emit("timer-update", {
       roomID,
-      timeLeft: `${mins}:${secs < 10 ? "0" : ""}${secs}`
+      timeLeft: formatted
     });
+
   }, 1000);
 }
+
 
 function stopTimer() {
   clearInterval(timerInterval);
@@ -119,5 +132,7 @@ socket.on("student-left", ({ socketId }) => {
   const el = document.getElementById(socketId);
   if (el) el.remove();
 });
+
+
 
 

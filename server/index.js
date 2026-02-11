@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
     socket.to(roomID).emit("timer-update", { timeLeft });
   });
 
-  socket.on("stop-timer", ({ roomID }) => {
+  socket.on("timer-stopped", ({ roomID }) => {
     socket.to(roomID).emit("timer-stopped");
   });
 
@@ -85,13 +85,15 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat-message", ({ roomID, message, sender }) => {
-    socket.to(roomID).emit("receive-message", {
+    io.to(roomID).emit("receive-message", {
       sender,
       message
     });
   });
 
 });
+
+
 
 const PORT = process.env.PORT || 3000;
 
