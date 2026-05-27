@@ -19,7 +19,7 @@ let isStudentCodeHidden = false;
 
 displayRoomID.innerText = roomID;
 
-const socket = io("http://localhost:3000");
+const socket = io();
 
 socket.emit("join-room", {
   roomID,

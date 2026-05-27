@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const socket = io("http://localhost:3000");
+  const socket = io();
   const teacherCode = document.getElementById("TeacherCode");
   let activeLanguage = "JavaScript";
   let teacherCodeHidden = false;
