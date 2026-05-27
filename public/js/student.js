@@ -77,6 +77,16 @@ function sendActivity() {
   emitSocket("user-activity");
 }
 
+function applyTeacherCodeVisibility(hidden) {
+  const teacherCode = getElement("TeacherCode");
+  if (!teacherCode) return;
+
+  teacherCodeHidden = !!hidden;
+  teacherCode.value = teacherCodeHidden ? "" : latestTeacherCode;
+  teacherCode.placeholder = teacherCodeHidden ? "Teacher code is hidden by the host." : "Waiting for teacher to type...";
+  teacherCode.classList.toggle("code-hidden", teacherCodeHidden);
+}
+
 function setupStudent(socketOrigin) {
   const urlParams = new URLSearchParams(window.location.search);
   roomID = urlParams.get("room");
@@ -155,9 +165,7 @@ function setupStudent(socketOrigin) {
   });
 
   socket.on("code-visibility-updated", ({ hidden }) => {
-    teacherCodeHidden = hidden;
-    teacherCode.value = hidden ? "" : latestTeacherCode;
-    teacherCode.placeholder = hidden ? "Teacher code is hidden." : "Waiting for teacher to type...";
+    applyTeacherCodeVisibility(hidden);
   });
 
   ["copy", "cut", "contextmenu"].forEach((eventName) => {

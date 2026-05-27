@@ -19,6 +19,7 @@ const hosts = {};
 const activeRooms = new Set();
 const userActivity = {};
 const roomCode = {}; 
+const roomCodeHidden = {};
 const roomStudents = {};
 const hostCloseTimers = {};
 
@@ -40,6 +41,7 @@ io.on("connection", (socket) => {
             socket.join(roomID);
             hosts[socket.id] = { roomID };
             socket.emit("student-list", Object.values(roomStudents[roomID] || {}));
+            socket.emit("code-visibility-updated", { hidden: !!roomCodeHidden[roomID] });
 
             if (roomCode[roomID]) {
                 socket.emit("code-update", { code: roomCode[roomID] });
@@ -60,6 +62,8 @@ io.on("connection", (socket) => {
                 userName,
                 status: "green"
             };
+            socket.emit("code-visibility-updated", { hidden: !!roomCodeHidden[roomID] });
+
             if (roomCode[roomID]) {
                 socket.emit("code-update", { code: roomCode[roomID] });
             }
@@ -149,7 +153,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on("code-visibility-change", ({ roomID, hidden }) => {
-        socket.to(roomID).emit("code-visibility-updated", { hidden });
+        roomCodeHidden[roomID] = !!hidden;
+        io.to(roomID).emit("code-visibility-updated", { hidden: !!hidden });
     });
 
     socket.on("disconnect", () => {
@@ -161,6 +166,7 @@ io.on("connection", (socket) => {
             hostCloseTimers[closingRoomID] = setTimeout(() => {
                 activeRooms.delete(closingRoomID);
                 delete roomCode[closingRoomID];
+                delete roomCodeHidden[closingRoomID];
                 delete roomStudents[closingRoomID];
                 io.to(closingRoomID).emit("room-closed");
                 delete hostCloseTimers[closingRoomID];

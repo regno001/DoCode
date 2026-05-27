@@ -52,6 +52,15 @@ textarea {
     font-size: 0.85rem; 
 }
 
+.code-hidden {
+    color: transparent;
+}
+
+.code-hidden::placeholder {
+    color: #facc15;
+    opacity: 1;
+}
+
 .chat-float{
     position: fixed;
     bottom: 20px;

@@ -154,6 +154,16 @@ window.startTimer = startTimer;
 window.stopTimer = stopTimer;
 window.copyRoomID = copyRoomID;
 
+function applyStudentCodeVisibility(hidden) {
+  const toggleStudentCode = getElement("toggleStudentCode");
+  isStudentCodeHidden = !!hidden;
+
+  if (toggleStudentCode) {
+    toggleStudentCode.textContent = isStudentCodeHidden ? "Unhide" : "Hide";
+    toggleStudentCode.classList.toggle("active", isStudentCodeHidden);
+  }
+}
+
 function setupHost(socketOrigin) {
   const displayRoomID = getElement("displayRoomID");
   const hostEditor = getElement("HostEditor");
@@ -244,12 +254,16 @@ function setupHost(socketOrigin) {
   });
 
   toggleStudentCode.addEventListener("click", () => {
-    isStudentCodeHidden = !isStudentCodeHidden;
-    toggleStudentCode.textContent = isStudentCodeHidden ? "Unhide" : "Hide";
+    const nextHiddenState = !isStudentCodeHidden;
+    applyStudentCodeVisibility(nextHiddenState);
     emitSocket("code-visibility-change", {
       roomID,
-      hidden: isStudentCodeHidden
+      hidden: nextHiddenState
     });
+  });
+
+  socket.on("code-visibility-updated", ({ hidden }) => {
+    applyStudentCodeVisibility(hidden);
   });
 
   socket.on("student-list", (students = []) => {

@@ -268,6 +268,11 @@ h3 {
     background: #30363d;
 }
 
+.nav-action.active {
+    background: #da3633;
+    border-color: #f85149;
+}
+
 .online-dot {
     width: 10px;
     height: 10px;
