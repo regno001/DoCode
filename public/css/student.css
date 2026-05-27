@@ -6,6 +6,9 @@ nav { height: 55px; background: #161b22; display: flex; justify-content: space-b
 .logo { font-size: 1.3rem; font-weight: 800; color: #58a6ff; }
 .Navigations { display: flex; gap: 15px; align-items: center; }
 #timerDisplay { background: #da3633; color: white; padding: 4px 10px; border-radius: 4px; font-family: 'Fira Code', monospace; font-weight: bold; }
+.connection-status { background: #30363d; color: #c9d1d9; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; }
+.connection-status.online { background: #238636; color: #fff; }
+.connection-status.offline { background: #da3633; color: #fff; }
 .room-info { background: #21262d; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; }
 
 /* Main Layout */

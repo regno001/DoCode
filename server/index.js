@@ -7,13 +7,20 @@ const fs = require("fs");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
 
 const users = {};
 const hosts = {};
 const activeRooms = new Set();
 const userActivity = {};
 const roomCode = {}; 
+const roomStudents = {};
+const hostCloseTimers = {};
 
 app.use(express.static(path.join(__dirname, "../public")));
 
@@ -24,9 +31,20 @@ app.get("/health", (req, res) => {
 io.on("connection", (socket) => {
     socket.on("join-room", ({ roomID, role, userName }) => {
         if (role === "host") {
+            if (hostCloseTimers[roomID]) {
+                clearTimeout(hostCloseTimers[roomID]);
+                delete hostCloseTimers[roomID];
+            }
+
             activeRooms.add(roomID);
             socket.join(roomID);
             hosts[socket.id] = { roomID };
+            socket.emit("student-list", Object.values(roomStudents[roomID] || {}));
+
+            if (roomCode[roomID]) {
+                socket.emit("code-update", { code: roomCode[roomID] });
+            }
+
             return;
         }
         if (role === "student") {
@@ -36,6 +54,12 @@ io.on("connection", (socket) => {
             }
             socket.join(roomID);
             users[socket.id] = { roomID, userName };
+            if (!roomStudents[roomID]) roomStudents[roomID] = {};
+            roomStudents[roomID][socket.id] = {
+                socketId: socket.id,
+                userName,
+                status: "green"
+            };
             if (roomCode[roomID]) {
                 socket.emit("code-update", { code: roomCode[roomID] });
             }
@@ -131,14 +155,27 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         const host = hosts[socket.id];
         if (host) {
-            activeRooms.delete(host.roomID);
-            delete roomCode[host.roomID];
-            socket.to(host.roomID).emit("room-closed");
+            const closingRoomID = host.roomID;
             delete hosts[socket.id];
+
+            hostCloseTimers[closingRoomID] = setTimeout(() => {
+                activeRooms.delete(closingRoomID);
+                delete roomCode[closingRoomID];
+                delete roomStudents[closingRoomID];
+                io.to(closingRoomID).emit("room-closed");
+                delete hostCloseTimers[closingRoomID];
+            }, 5000);
         }
 
         const user = users[socket.id];
         if (user) {
+            if (roomStudents[user.roomID]) {
+                delete roomStudents[user.roomID][socket.id];
+                if (Object.keys(roomStudents[user.roomID]).length === 0) {
+                    delete roomStudents[user.roomID];
+                }
+            }
+
             socket.to(user.roomID).emit("student-left", { socketId: socket.id });
             delete users[socket.id];
             delete userActivity[socket.id];
@@ -156,12 +193,23 @@ setInterval(() => {
         const lastActive = userActivity[socketId] || now;
         const diff = (now - lastActive) / 1000;
         let status = diff >= 300 ? "red" : (diff >= 180 ? "yellow" : "green");
+        const roomID = users[socketId].roomID;
+        if (roomStudents[roomID] && roomStudents[roomID][socketId]) {
+            roomStudents[roomID][socketId].status = status;
+        }
         io.to(users[socketId].roomID).emit("user-status", { socketId, status });
     }
 }, 5000);
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST;
 
-server.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (HOST) {
+    server.listen(PORT, HOST, () => {
+        console.log(`Server running on http://${HOST}:${PORT}`);
+    });
+} else {
+    server.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}

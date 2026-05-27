@@ -64,6 +64,25 @@ nav {
     font-weight: bold;
 }
 
+.connection-status {
+    background: #30363d;
+    color: #c9d1d9;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.connection-status.online {
+    background: #238636;
+    color: #fff;
+}
+
+.connection-status.offline {
+    background: #da3633;
+    color: #fff;
+}
+
 /* --- Layout Structure --- */
 main {
     display: flex;
