@@ -23,7 +23,13 @@ const roomCodeHidden = {};
 const roomStudents = {};
 const hostCloseTimers = {};
 
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../public"), {
+    etag: false,
+    maxAge: 0,
+    setHeaders: (res) => {
+        res.setHeader("Cache-Control", "no-store");
+    }
+}));
 
 app.get("/health", (req, res) => {
     res.json({ status: "ok" });
