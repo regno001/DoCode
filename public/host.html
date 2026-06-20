@@ -1,107 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoCode | Host Dashboard</title>
-  <link rel="stylesheet" href="css/host.css">
-  <link rel="stylesheet" href="css/preloader.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DoCode Host Dashboard — manage your live coding classroom.">
+    <title>DoCode | Host Dashboard</title>
+    <link rel="stylesheet" href="css/host.css">
+    <link rel="stylesheet" href="css/preloader.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="appPreloader" class="app-preloader" role="status" aria-live="polite" aria-label="Loading DoCode">
-    <div class="preloader-content">
-      <div class="preloader-ring" aria-hidden="true"></div>
-      <div class="preloader-logo">Do<span>Code</span></div>
-      <div class="preloader-text">Loading DoCode...</div>
-    </div>
-  </div>
-
-  <nav>
-    <div class="logo">DoCode <span class="role-tag">| Host</span></div>
-    <div class="Navigations">
-      <div class="nav-item">Home</div>
-      
-      <div class="room-box" onclick="copyRoomID()" title="Click to copy">
-        RoomId: <span id="displayRoomID">LBC-XXXX</span>
-      </div>
-
-      <div id="timerDisplay">00:00</div>
-      <div id="connectionStatus" class="connection-status">Connecting</div>
-
-      <div class="Lang">
-        <select id="Language">
-          <option value="JavaScript">JavaScript</option>
-          <option value="Python">Python</option>
-          <option value="C">C</option>
-          <option value="C++">C++</option>
-          
-        </select>
-      </div>
-      <div class="Execute">
-        <div class="run">
-          <button class="run">Run</button>
+    <div id="appPreloader" class="app-preloader" role="status" aria-live="polite" aria-label="Loading DoCode">
+        <div class="preloader-content">
+            <div class="preloader-ring" aria-hidden="true"></div>
+            <div class="preloader-logo">Do<span>Code</span></div>
+            <div class="preloader-text">Preparing your workspace…</div>
         </div>
-      </div>
-      <button id="downloadHostCode" class="nav-action" type="button">Download</button>
-      <button id="toggleStudentCode" class="nav-action" type="button">Hide</button>
     </div>
-  </nav>
 
-  <main>
-    <aside class="sidebar">
-      <section class="student-section">
-        <h3>Students Online</h3>
-        <div id="studentList">
-         </div>
-      </section>
-
-      <section class="chat-section">
-        <h3>Live Chat</h3>
-        <div id="chatBox">
-          <div class="chat-msg"><b>System:</b> Workspace is ready.</div>
+    <!-- ====== Top Navigation ====== -->
+    <nav>
+        <div class="nav-left">
+            <a href="index.html" class="logo" title="Back to Home">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span class="logo-text">DoCode</span>
+                <span class="role-tag">Host</span>
+            </a>
         </div>
-        <div class="chat-input-area">
-          <input type="text" id="userMsg" placeholder="Type message and press Enter...">
-        </div>
-      </section>
-    </aside>
 
-    <div class="editor-container">
-      <section class="coding-area">
-        <div class="panel-header">Editor</div>
-        <textarea id="HostEditor" spellcheck="false" placeholder="// Start Your Program Here..."></textarea>
-      </section>
+        <div class="Navigations">
+            <!-- Room ID -->
+            <button class="nav-chip room-box" onclick="copyRoomID()" title="Click to copy Room ID" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="displayRoomID">LBC-XXXX</span>
+            </button>
 
-      <section class="terminal-area">
-        <div class="panel-header">Terminal</div>
-        <div class="terminal-body">
-          <div class="terminal-content">
-            <span class="terminal-prompt">C:\Users\DoCode></span>
-            <textarea id="HostTerminal" spellcheck="false" placeholder="Output will appear here..."></textarea>
-          </div>
+            <!-- Connection -->
+            <div id="connectionStatus" class="connection-status">
+                <span class="status-dot"></span>
+                Connecting
+            </div>
+
+            <!-- Timer -->
+            <div id="timerDisplay" class="timer-badge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>00:00</span>
+            </div>
+
+            <div class="nav-sep"></div>
+
+            <!-- Language -->
+            <div class="select-wrap">
+                <select id="Language">
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                </select>
+                <svg class="select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+
+            <!-- Run -->
+            <div class="Execute">
+                <div class="run">
+                    <button class="run btn-run" type="button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Run
+                    </button>
+                </div>
+            </div>
+
+            <div class="nav-sep"></div>
+
+            <!-- Actions -->
+            <button id="downloadHostCode" class="nav-action" type="button" title="Download code">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+            </button>
+
+            <button id="toggleStudentCode" class="nav-action" type="button" title="Toggle student code visibility">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                Hide
+            </button>
         </div>
-      </section>
+    </nav>
+
+    <!-- ====== Main Layout ====== -->
+    <main>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <section class="student-section">
+                <div class="section-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Students Online
+                </div>
+                <div id="studentList"></div>
+            </section>
+
+            <section class="chat-section">
+                <div class="section-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Live Chat
+                </div>
+                <div id="chatBox">
+                    <div class="chat-msg system-msg">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        Workspace is ready.
+                    </div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="userMsg" placeholder="Type a message…" autocomplete="off">
+                    <button class="chat-send-btn" onclick="document.getElementById('userMsg').dispatchEvent(new KeyboardEvent('keypress',{key:'Enter'}))" type="button" title="Send">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Editor + Terminal -->
+        <div class="editor-container">
+            <section class="coding-area">
+                <div class="panel-header">
+                    <div class="panel-tab active">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        Editor
+                    </div>
+                </div>
+                <textarea id="HostEditor" spellcheck="false" placeholder="// Start writing your code here…"></textarea>
+            </section>
+
+            <section class="terminal-area">
+                <div class="panel-header">
+                    <div class="panel-tab active">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                        Terminal
+                    </div>
+                </div>
+                <div class="terminal-body">
+                    <div class="terminal-content">
+                        <span class="terminal-prompt">
+                            <span class="prompt-user">DoCode</span>
+                            <span class="prompt-sep">~</span>
+                            <span class="prompt-caret">$</span>
+                        </span>
+                        <textarea id="HostTerminal" spellcheck="false" placeholder="Output will appear here…"></textarea>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Timer float -->
+    <div class="timer-float">
+        <div class="timer-controls">
+            <select id="Timer">
+                <option value="5">5 min</option>
+                <option value="10">10 min</option>
+                <option value="15">15 min</option>
+            </select>
+            <button class="btn-start" onclick="startTimer()" type="button">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Start
+            </button>
+            <button class="btn-stop" onclick="stopTimer()" type="button">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                Stop
+            </button>
+        </div>
     </div>
-  </main>
 
-  <div class="timer-float">
-    <div class="timer-controls">
-        <select id="Timer">
-          <option value="5">5 min</option>
-          <option value="10">10 min</option>
-          <option value="15">15 min</option>
-        </select>
-        <button class="btn-start" onclick="startTimer()">Start</button>
-        <button class="btn-stop" onclick="stopTimer()">Stop</button>
+    <!-- Toast -->
+    <div id="copyToast" class="copy-toast">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Room ID copied!
     </div>
-  </div>
 
-  <div id="copyToast" class="copy-toast">Room ID copied</div>
-
-  <script src="js/socket-client.js?v=20260609-1"></script>
-  <script src="js/preloader.js?v=20260609-1"></script>
-  <script src="js/boilerplate.js?v=20260609-1"></script>
-  <script src="js/host.js?v=20260609-1"></script>
+    <script src="js/socket-client.js?v=20260620-1"></script>
+    <script src="js/preloader.js?v=20260620-1"></script>
+    <script src="js/boilerplate.js?v=20260620-1"></script>
+    <script src="js/host.js?v=20260620-1"></script>
 </body>
 </html>

@@ -3,69 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DoCode Student Classroom — practice coding alongside your teacher in real-time.">
     <title>DoCode | Student Classroom</title>
     <link rel="stylesheet" href="css/student.css">
     <link rel="stylesheet" href="css/preloader.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="appPreloader" class="app-preloader" role="status" aria-live="polite" aria-label="Loading DoCode">
         <div class="preloader-content">
             <div class="preloader-ring" aria-hidden="true"></div>
             <div class="preloader-logo">Do<span>Code</span></div>
-            <div class="preloader-text">Loading DoCode...</div>
+            <div class="preloader-text">Joining classroom…</div>
         </div>
     </div>
 
+    <!-- ====== Navigation ====== -->
     <nav>
-        <div class="logo">DoCode <span class="role-tag">| Student</span></div>
+        <div class="nav-left">
+            <div class="logo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span class="logo-text">DoCode</span>
+                <span class="role-tag">Student</span>
+            </div>
+        </div>
+
         <div class="Navigations">
-            <div id="timerDisplay">00:00</div>
-            <div id="connectionStatus" class="connection-status">Connecting</div>
-            <div class="room-info">Room: <span id="currentRoom">LBC-XXXX</span></div>
-            <div class="lang-tag">Language: <span id="activeLang">JavaScript</span></div>
+            <!-- Timer -->
+            <div id="timerDisplay" class="timer-badge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>00:00</span>
+            </div>
+
+            <!-- Connection -->
+            <div id="connectionStatus" class="connection-status">
+                <span class="status-dot"></span>
+                Connecting
+            </div>
+
+            <!-- Room info -->
+            <div class="nav-chip room-info">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span id="currentRoom">LBC-XXXX</span>
+            </div>
+
+            <!-- Language -->
+            <div class="nav-chip lang-tag">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span id="activeLang">JavaScript</span>
+            </div>
+
+            <div class="nav-sep"></div>
+
+            <!-- Run -->
             <div class="Execute">
                 <div class="run">
-                    <button class="run">Run</button>
+                    <button class="run btn-run" type="button">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Run
+                    </button>
                 </div>
             </div>
-            <button id="downloadStudentCode" class="nav-action" type="button">Download</button>
+
+            <!-- Download -->
+            <button id="downloadStudentCode" class="nav-action" type="button" title="Download your code">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+            </button>
         </div>
     </nav>
 
+    <!-- ====== Main: Split Panels ====== -->
     <main>
+        <!-- Teacher Panel -->
         <section class="panel teacher-panel">
-            <div class="panel-header">Teacher Editor</div>
-            <textarea id="TeacherCode" readonly placeholder="Waiting for teacher to type..."></textarea>
-            
-            <div class="panel-header border-top">Teacher Terminal</div>
-            <textarea id="TeacherTerminal" class="terminal-view" readonly placeholder="Output will appear here..."></textarea>
+            <div class="panel-header">
+                <div class="panel-tab active">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    Teacher Editor
+                </div>
+                <div class="panel-label">Read-only</div>
+            </div>
+            <textarea id="TeacherCode" readonly placeholder="Waiting for teacher to type…"></textarea>
+
+            <div class="panel-header">
+                <div class="panel-tab active">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                    Teacher Terminal
+                </div>
+            </div>
+            <textarea id="TeacherTerminal" class="terminal-view" readonly placeholder="Output will appear here…"></textarea>
         </section>
 
+        <!-- Student Panel -->
         <section class="panel student-panel">
-            <div class="panel-header">Your Workspace</div>
-            <textarea id="StudentEditor" spellcheck="false" placeholder="Start practicing here..."></textarea>
-            
-            <div class="panel-header border-top">Your Terminal</div>
-            <textarea id="StudentTerminal" class="terminal-view" placeholder="Your code results..."></textarea>
+            <div class="panel-header">
+                <div class="panel-tab active student-accent">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    Your Workspace
+                </div>
+            </div>
+            <textarea id="StudentEditor" spellcheck="false" placeholder="Start practicing here…"></textarea>
+
+            <div class="panel-header">
+                <div class="panel-tab active student-accent">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                    Your Terminal
+                </div>
+            </div>
+            <textarea id="StudentTerminal" class="terminal-view" placeholder="Your code results…"></textarea>
         </section>
 
+        <!-- Floating Chat -->
         <div class="chat-float" id="chatFloat">
             <div class="chat-header" onclick="toggleChat()">
-                <span>Chat</span>
-                <span class="chat-toggle">-</span>
-            </div> 
-        <div class="chat-body" id="chatBody">
-            <div id="chatBox"></div>
-            <input type="text" id="userMsg" placeholder="Type Your Query"> 
-        </div>
+                <div class="chat-header-left">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Chat</span>
+                </div>
+                <span class="chat-toggle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </span>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div id="chatBox"></div>
+                <div class="chat-input-wrap">
+                    <input type="text" id="userMsg" placeholder="Type a message…" autocomplete="off">
+                </div>
+            </div>
         </div>
     </main>
 
-    <div id="studentToast" class="student-toast"></div>
+    <!-- Toast -->
+    <div id="studentToast" class="student-toast">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span class="toast-text"></span>
+    </div>
 
-    <script src="js/socket-client.js?v=20260609-1"></script>
-    <script src="js/preloader.js?v=20260609-1"></script>
-    <script src="js/student.js?v=20260609-1"></script>
+    <script src="js/socket-client.js?v=20260620-1"></script>
+    <script src="js/preloader.js?v=20260620-1"></script>
+    <script src="js/student.js?v=20260620-1"></script>
 </body>
 </html>
